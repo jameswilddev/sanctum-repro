@@ -27,6 +27,20 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
+    public function test_route_is_secured_against_invalid_tokens()
+    {
+        $response = $this->getJson('/api/user', [
+            'Authorization' => 'Bearer invalidtoken',
+        ]);
+
+        $response->assertUnauthorized();
+    }
+
+    /**
+     * A basic test example.
+     *
+     * @return void
+     */
     public function test_route_allows_access_when_logged_in()
     {
         $token = $this->postJson('/api/login')->json('token');
